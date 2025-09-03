@@ -1,0 +1,79 @@
+[gd_scene load_steps=5 format=3 uid="uid://bg0fk1qiaku"]
+
+[ext_resource type="Script" uid="uid://dn25hjvo82s1b" path="res://main.gd" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://cirpsl8wi0s0n" path="res://hrac.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://b0f2ya58eh1rg" path="res://padajici_objekt.tscn" id="2_h2yge"]
+[ext_resource type="AudioStream" uid="uid://bgpvcwgy8sn4m" path="res://assets/klik.wav" id="4_1bvp3"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_0xm2m")
+scena_objektu = ExtResource("2_h2yge")
+
+[node name="Hrac" parent="." instance=ExtResource("1_ig7tw")]
+position = Vector2(576, 600)
+
+[node name="SpawnTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="SkoreLabel" type="Label" parent="UI"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 82.0
+offset_bottom = 43.0
+theme_override_font_sizes/font_size = 32
+text = "Skóre: 0"
+
+[node name="GameOverMenu" type="ColorRect" parent="UI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.588235)
+
+[node name="MenuKontejner" type="VBoxContainer" parent="UI/GameOverMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="UI/GameOverMenu/MenuKontejner"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Konec hry!"
+horizontal_alignment = 1
+
+[node name="SkoreKonecLabel" type="Label" parent="UI/GameOverMenu/MenuKontejner"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Skóre: 999"
+horizontal_alignment = 1
+
+[node name="HighscoreLabel" type="Label" parent="UI/GameOverMenu/MenuKontejner"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Nejvyšší skóre: 0"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="UI/GameOverMenu/MenuKontejner"]
+layout_mode = 2
+text = "Hrát znovu"
+
+[node name="ZvukKlik" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_1bvp3")
+
+[connection signal="hrac_zemrel" from="Hrac" to="." method="_on_hrac_hrac_zemrel"]
+[connection signal="objekt_sebran" from="Hrac" to="." method="_on_hrac_objekt_sebran"]
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
+[connection signal="pressed" from="UI/GameOverMenu/MenuKontejner/RestartButton" to="." method="_on_restart_button_pressed"]

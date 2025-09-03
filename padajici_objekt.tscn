@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0f2ya58eh1rg"]
+
+[ext_resource type="Script" uid="uid://bfopc37ijkhap" path="res://padajici_objekt.gd" id="1_d5bw6"]
+[ext_resource type="Texture2D" uid="uid://cuq42ccbjp358" path="res://assets/drahokam.png" id="2_d5bw6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qnc3y"]
+radius = 19.0
+
+[node name="PadajiciObjekt" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 0
+gravity_scale = 0.5
+script = ExtResource("1_d5bw6")
+
+[node name="Grafika" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_d5bw6")
+
+[node name="Kolize" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_qnc3y")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
